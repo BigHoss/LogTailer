@@ -4,8 +4,9 @@ namespace TestFileGenerator
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
-    using TestFileGenerator.Models;
+    using Models;
     using TestFileGenerator.Services;
+
     public class Program
     {
         public static void Main(string[] args)
@@ -18,16 +19,13 @@ namespace TestFileGenerator
             var serviceProvider = serviceCollection.BuildServiceProvider();
 
             // run app
-            serviceProvider.GetService<App>().Run();
+            serviceProvider.GetService<App>()?.Run();
         }
 
         private static void ConfigureServices(IServiceCollection serviceCollection)
         {
             // add logging
-            serviceCollection.AddSingleton(new LoggerFactory()
-                .AddConsole()
-                .AddDebug());
-            serviceCollection.AddLogging(); 
+            serviceCollection.AddLogging(cfg => cfg.AddConsole().AddDebug()); 
 
             // build configuration
             var configuration = new ConfigurationBuilder()
@@ -40,15 +38,13 @@ namespace TestFileGenerator
             ConfigureConsole(configuration);
 
             // add services
-            serviceCollection.AddTransient<ITestService, TestService>();
+            serviceCollection.AddTransient<ITestFileService, TestFileService>();
 
             // add app
             serviceCollection.AddTransient<App>();
         }
 
-        private static void ConfigureConsole(IConfigurationRoot configuration)
-        {
+        private static void ConfigureConsole(IConfigurationRoot configuration) =>
             System.Console.Title = configuration.GetSection("Configuration:ConsoleTitle").Value;
-        }
     }
 }

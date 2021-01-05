@@ -1,0 +1,16 @@
+<UserControl x:Class="LogTailer.Ui.UserControls.ClosableTabItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:catel="http://schemas.catelproject.com"
+             xmlns:controls="clr-namespace:LogTailer.Ui.UserControls"
+             mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="300">
+<StackPanel Orientation="Horizontal">
+    <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type controls:ClosableTabItem}}, Path=Title}" />
+    <Button Click="OnCloseButtonClick" Margin="5,0,0,0" Background="Transparent"
+            Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type controls:ClosableTabItem}}, Path=CanClose, Converter={catel:BooleanToCollapsingVisibilityConverter}}">
+        <ContentControl Content="{StaticResource Close}"></ContentControl>
+    </Button>
+</StackPanel>
+</UserControl>

@@ -10,8 +10,7 @@ namespace TestFileGenerator.Services
     using System.Threading;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
-    using TestFileGenerator.Models;
-    using Timer = System.Timers.Timer;
+    using Models;
 
     /// <summary>
     /// Interface ITestFileService
@@ -60,9 +59,15 @@ namespace TestFileGenerator.Services
                 File.WriteAllText(_config.FileToGenerate, string.Empty);
             }
 
+            if (!File.Exists(_config.FileToGenerate))
+            {
+                var fs = File.Create(_config.FileToGenerate);
+                fs.Close();
+            }
+
             while (true)
             {
-                File.AppendAllText(_config.FileToGenerate, $"{DateTime.Now:s}, info(this is a testlogentry)");
+                File.AppendAllText(_config.FileToGenerate, $"{DateTime.Now:s}, info(this is a testlogentry){Environment.NewLine}");
 
                 Thread.Sleep(_config.IntervalToGenerate);
             }

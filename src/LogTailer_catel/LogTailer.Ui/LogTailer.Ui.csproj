@@ -1,0 +1,154 @@
+<Project Sdk="MSBuild.Sdk.Extras/3.0.22">
+  <PropertyGroup>
+    <TargetFrameworks>net5.0-windows</TargetFrameworks>
+    <AssemblyName>LogTailer.Ui</AssemblyName>
+    <RootNamespace>LogTailer.Ui</RootNamespace>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <LangVersion>latest</LangVersion>
+    <nullable>enable</nullable>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <UseWpf>true</UseWpf>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ExtrasEnableImplicitWpfReferences>true</ExtrasEnableImplicitWpfReferences>
+    <ExtrasEnableImplicitWinFormsReferences>true</ExtrasEnableImplicitWinFormsReferences>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- Tools like SonarQube require a unique project guid -->
+    <ProjectGuid>3bb65371-4982-464c-b2ea-b09c9fcda474</ProjectGuid>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <StartupObject />
+    <NoWarn>$(NoWarn);SA1652</NoWarn>
+    <ApplicationIcon>Resources\Icons\logo.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Catel.MVVM" Version="5.12.11" />
+    <PackageReference Include="Catel.Fody" Version="4.5.0" PrivateAssets="all" />
+    <PackageReference Include="Fody" Version="6.3.0" PrivateAssets="all" />
+    <PackageReference Include="ModuleInit.Fody" Version="2.1.1" PrivateAssets="all" />
+    <PackageReference Include="Obsolete.Fody" Version="5.2.1" PrivateAssets="all" />
+    <PackageReference Include="Syncfusion.Grid.Windows" Version="18.4.0.32" />
+    <PackageReference Include="Syncfusion.SfSkinManager.WPF" Version="18.4.0.32" />
+    <PackageReference Include="Syncfusion.Shared.Base" Version="18.4.0.32" />
+    <PackageReference Include="Syncfusion.Shared.WPF" Version="18.4.0.32" />
+    <PackageReference Include="Syncfusion.Themes.MaterialDark.WPF" Version="18.4.0.32" />
+    <PackageReference Include="Syncfusion.Tools.Windows" Version="18.4.0.32" />
+    <PackageReference Include="Syncfusion.Tools.WPF" Version="18.4.0.32" />
+    <PackageReference Include="WpfAnalyzers" Version="3.5.4" PrivateAssets="all">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="NETStandard.Library" Version="2.0.1" />
+  </ItemGroup>
+
+  <Import Project="$(MSBuildProjectDirectory)\..\Directory.build.shared.explicit.props" Condition="Exists('$(MSBuildProjectDirectory)\..\Directory.build.shared.explicit.props')" />
+  
+  <!-- Fallback code in case repository template is not found, code below can be removed when the repository template files are used -->
+  <Choose>
+    <When Condition="!Exists('$(MSBuildProjectDirectory)\..\Directory.build.shared.explicit.props')">
+        <PropertyGroup>
+          <NoWarn>$(NoWarn);CS1591;CS1998;NU1603;NU1605;NU1608;NU1701;AD0001</NoWarn>
+          <NoError>$(NoError);CS1591;CS1998;NU1603;NU1605;NU1608;NU1701;AD0001</NoError>
+          <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+          <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+          <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
+          <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+          <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+          <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
+          <PackageOutputPath>$(ProjectDir)..\..\bin\$(Configuration)\</PackageOutputPath>
+          <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb;.xml</AllowedOutputExtensionsInPackageBuildOutputFolder>
+          <Deterministic>False</Deterministic>
+          <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+        </PropertyGroup>
+        
+        <!-- Explicit additional project properties that require stuff set before -->
+        <PropertyGroup>
+          <!-- 
+            Use MsBuildProjectName, this allows us to use the same assembly name for different
+            versions, e.g.:
+            
+            Orc.EntityFramework5 => Orc.EntityFramework.dll
+            Orc.EntityFramework6 => Orc.EntityFramework.dll
+            
+            If we would use AssemblyName, they would be compiled into the same directory
+          -->
+          <OverridableOutputPath>$(ProjectDir)..\output\$(Configuration)\$(MSBuildProjectName)\</OverridableOutputPath>
+          <OutputPath>..\..\bin\Release\</OutputPath>
+          <DocumentationFile>..\..\srcdoc\LogTailer.Ui.xml</DocumentationFile>
+        </PropertyGroup>
+        
+        <!-- Enforce portable pdb format -->
+        <PropertyGroup Condition="'$(Configuration)'=='Release'">
+          <DebugType>portable</DebugType>
+          <!-- Debug symbols are required for ApiApprover -->
+          <DebugSymbols>true</DebugSymbols>
+        </PropertyGroup>
+
+        <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+          <DebugType>full</DebugType>
+          <DebugSymbols>true</DebugSymbols>
+        </PropertyGroup>
+
+        <ItemGroup>
+          <Compile Include="..\*.cs">
+            <SonarQubeExclude>true</SonarQubeExclude>
+          </Compile>
+        </ItemGroup>
+        
+        <!-- Platform specific stuff -->
+        <ItemGroup>
+          <Compile Remove="Platforms\**\*.cs;Resources\**\*.cs" />
+          <Page Remove="Platforms\**\*.xaml" />
+          <!-- This is here so that the conditionally included files below are all visible in VS -->
+          <None Include="Platforms\**\*.*" />
+          <None Include="Resources\**\*.*" Exclude="Resources\**\*.xaml" />
+          <EmbeddedResource Include="Resources\Files\**\*.*" />
+          <Resource Include="Resources\Fonts\**\*.ttf" />
+          <Resource Include="Resources\Images\**\*.png" />
+          <Resource Include="Resources\Images\**\*.gif" />
+          <Resource Include="Resources\Images\**\*.jpg" />
+          <Resource Include="Resources\Images\**\*.jpeg" />
+          <EmbeddedResource Include="Resources\ThirdPartyNotices\**\*" />
+        </ItemGroup>
+        
+        <ItemGroup>
+          <EmbeddedResource Update="Properties\Resources.*.resx">
+            <Generator />
+          </EmbeddedResource>
+        
+          <EmbeddedResource Update="Properties\Resources.resx">
+            <Generator>ResXFileCodeGenerator</Generator>
+            <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+          </EmbeddedResource>
+        
+          <Compile Update="Properties\Resources.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>Resources.resx</DependentUpon>
+          </Compile>
+        </ItemGroup>
+        
+        <!-- .NET Core app 3.0 -->
+        <PropertyGroup Condition=" '$(TargetFramework)' == 'net5.0-windows' ">
+          <DefineConstants>$(DefineConstants);NETCORE;NETCORE3_0;NETCOREAPP;NETCOREAPP3_0;NET5_0</DefineConstants>
+        </PropertyGroup>
+        
+        <ItemGroup Condition=" '$(TargetFramework)' == 'net5.0-windows' ">
+          <None Remove="Platforms\net\**\*.cs;Platforms\net\**\*.xaml;Platforms\net\**\*.xaml.cs" />
+          <Compile Include="Platforms\net\**\*.cs" DependentUpon="%(Filename)" />
+          <Page Include="Platforms\net\**\*.xaml" SubType="Designer" Generator="MSBuild:Compile" />
+          <Compile Update="Platforms\net\**\*.xaml.cs" SubType="Code" DependentUpon="%(Filename)" />
+        </ItemGroup>
+        
+
+    </When>
+  </Choose>
+</Project>
