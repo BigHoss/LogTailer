@@ -67,9 +67,11 @@ namespace TestFileGenerator.Services
 
             while (true)
             {
-                File.AppendAllText(_config.FileToGenerate, $"{DateTime.Now:s}, info(this is a testlogentry){Environment.NewLine}");
+                File.AppendAllText(_config.FileToGenerate, $"{DateTime.Now:s}, info(this is a testlogentry), guid({Guid.NewGuid()}) {Environment.NewLine}");
+                _logger.LogInformation("new line");
 
                 Thread.Sleep(_config.IntervalToGenerate);
+                //var asdf = Console.ReadLine();
             }
 
         }
