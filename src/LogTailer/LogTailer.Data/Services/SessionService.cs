@@ -4,7 +4,6 @@ namespace LogTailer.Data.Services
     using System.Linq;
     using System.Threading.Tasks;
     using Domain.Models;
-    using Microsoft.EntityFrameworkCore;
 
     public class SessionService : ISessionService
     {

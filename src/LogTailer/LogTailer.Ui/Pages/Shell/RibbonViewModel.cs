@@ -1,49 +1,15 @@
+// ReSharper disable ClassNeverInstantiated.Global
 namespace LogTailer.Ui.Pages.Shell
 {
-    using Domain.Models;
-    using File;
+    using Events;
     using Microsoft.Win32;
-    using Services;
     using Stylet;
-    using Syncfusion.SfSkinManager;
 
     public class RibbonViewModel : Screen
     {
         private readonly IEventAggregator _eventAggregator;
-        private readonly ISessionStateService _stateService;
 
-        private Session session;
-
-        public Session Session
-        {
-            get => session;
-            set => SetAndNotify(ref session, value);
-        }
-
-        private VisualStyles selectedTheme;
-
-        public VisualStyles SelectedTheme
-        {
-            get
-            {
-                selectedTheme = (VisualStyles)Session.ThemeIndex;
-                return selectedTheme;
-            }
-            set
-            {
-                SetAndNotify(ref selectedTheme, value);
-                Session.ThemeIndex = (int)selectedTheme;
-            }
-        }
-
-        public RibbonViewModel(IEventAggregator eventAggregator,
-                               ISessionStateService stateService)
-        {
-            _eventAggregator = eventAggregator;
-            _stateService = stateService;
-
-            Session =_stateService.ReadSession();
-        }
+        public RibbonViewModel(IEventAggregator eventAggregator) => _eventAggregator = eventAggregator;
 
         public void OpenFile()
         {

@@ -1,11 +1,11 @@
-namespace LogTailer
+namespace LogTailer.Ui
 {
     using System;
     using Autofac;
+    using Bootstrappers;
     using Microsoft.Extensions.Configuration;
+    using Pages;
     using Syncfusion.SfSkinManager;
-    using Ui.Bootstrappers;
-    using Ui.Pages;
 
     public class Bootstrapper : AutofacBootstrapper<ShellViewModel>
     {
@@ -15,7 +15,7 @@ namespace LogTailer
                        .SetBasePath(Environment.CurrentDirectory)
                        .AddJsonFile("appsettings.json");
 
-            builder.Register(context => configuration)
+            builder.Register(_ => configuration)
                    .AsImplementedInterfaces()
                    .InstancePerLifetimeScope();
 

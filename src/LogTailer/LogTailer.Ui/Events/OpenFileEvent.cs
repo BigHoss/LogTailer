@@ -1,4 +1,4 @@
-namespace LogTailer.Ui.Pages.File
+namespace LogTailer.Ui.Events
 {
     public class OpenFileEvent
     {

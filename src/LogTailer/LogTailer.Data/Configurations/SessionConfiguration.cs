@@ -6,12 +6,6 @@ namespace LogTailer.Data.Configurations
 
     public class SessionConfiguration : IEntityTypeConfiguration<Session>
     {
-        public void Configure(EntityTypeBuilder<Session> builder)
-        {
-            _ = builder.HasKey(x => x.Id);
-
-            _ = builder.Property(x => x.RibbonCollapsed)
-                       .IsUnicode(false);
-        }
+        public void Configure(EntityTypeBuilder<Session> builder) => _ = builder.HasKey(x => x.Id);
     }
 }

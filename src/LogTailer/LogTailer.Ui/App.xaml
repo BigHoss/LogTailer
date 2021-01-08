@@ -1,12 +1,12 @@
-<Application x:Class="LogTailer.App"
+<Application x:Class="LogTailer.Ui.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:s="https://github.com/canton7/Stylet"
-             xmlns:local="clr-namespace:LogTailer">
+             xmlns:ui="clr-namespace:LogTailer.Ui">
     <Application.Resources>
         <s:ApplicationLoader>
             <s:ApplicationLoader.Bootstrapper>
-                <local:Bootstrapper/>
+                <ui:Bootstrapper/>
             </s:ApplicationLoader.Bootstrapper>
 
             <s:ApplicationLoader.MergedDictionaries>

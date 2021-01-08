@@ -5,7 +5,6 @@ namespace LogTailer.Ui.Pages.File
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
-    using Extensions;
     using Models;
     using Stylet;
 
@@ -14,11 +13,11 @@ namespace LogTailer.Ui.Pages.File
         private long lastPosition;
         // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
         private FileSystemWatcher? fileSystemWatcher;
-        private string title;
+        private string? title;
         private IObservableCollection<FileLine> textLines = new BindableCollection<FileLine>();
-        private FileLine selectedLine;
+        private FileLine? selectedLine;
 
-        public string Title
+        public string? Title
         {
             get => title;
             set => SetAndNotify(ref title, value);
@@ -30,7 +29,7 @@ namespace LogTailer.Ui.Pages.File
             set => SetAndNotify(ref textLines, value);
         }
 
-        public FileLine SelectedLine
+        public FileLine? SelectedLine
         {
             get => selectedLine;
             set => SetAndNotify(ref selectedLine, value);
@@ -38,10 +37,13 @@ namespace LogTailer.Ui.Pages.File
 
         public FileDisplayViewModel(string filePath)
         {
+            FilePath = filePath;
             Title = Path.GetFileNameWithoutExtension(filePath);
 
-            _ = Task.Run(async () => InitializeFileTailing(filePath));
+            _ = Task.Run(() => InitializeFileTailing(filePath));
         }
+
+        public string FilePath { get; set; }
 
         private async Task InitializeFileTailing(string filePath)
         {
@@ -53,7 +55,7 @@ namespace LogTailer.Ui.Pages.File
                 TextLines.Add(new FileLine(DateTime.Now, line));
             }
 
-            RefreshSelectedToLast();
+            await RefreshSelectedToLast();
 
             lastPosition = fileStream.Position;
 
@@ -70,38 +72,41 @@ namespace LogTailer.Ui.Pages.File
             }
         }
 
-        private void RefreshSelectedToLast()
+        private Task RefreshSelectedToLast()
         {
             SelectedLine = TextLines.Last();
+            return Task.CompletedTask;
         }
 
         private void FileSystemWatcherOnChanged(object sender,
                                                 FileSystemEventArgs e)
         {
-            if (e.ChangeType == WatcherChangeTypes.Changed)
+            if (e.ChangeType != WatcherChangeTypes.Changed)
             {
-                var filePath = e.FullPath;
-                using var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
-                using var streamReader = new StreamReader(fileStream, Encoding.Default);
-
-                if (lastPosition > fileStream.Length)
-                {
-                    lastPosition = 0;
-                    TextLines = new BindableCollection<FileLine>();
-                }
-
-                fileStream.Seek(lastPosition, SeekOrigin.Begin);
-
-                string? line;
-                while ((line = streamReader.ReadLine()) != null)
-                {
-                    TextLines.Add(new FileLine(DateTime.Now, line));
-                }
-
-                RefreshSelectedToLast();
-
-                lastPosition = fileStream.Position;
+                return;
             }
+
+            var filePath = e.FullPath;
+            using var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
+            using var streamReader = new StreamReader(fileStream, Encoding.Default);
+
+            if (lastPosition > fileStream.Length)
+            {
+                lastPosition = 0;
+                TextLines = new BindableCollection<FileLine>();
+            }
+
+            fileStream.Seek(lastPosition, SeekOrigin.Begin);
+
+            string? line;
+            while ((line = streamReader.ReadLine()) != null)
+            {
+                TextLines.Add(new FileLine(DateTime.Now, line));
+            }
+
+            RefreshSelectedToLast();
+
+            lastPosition = fileStream.Position;
         }
     }
 }

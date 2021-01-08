@@ -1,7 +1,6 @@
 namespace LogTailer.Data
 {
     using Autofac;
-    using Microsoft.EntityFrameworkCore;
     using Services.Base;
 
     public class DataModule : Module

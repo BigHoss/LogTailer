@@ -1,13 +1,16 @@
-namespace LogTailer.Services
+namespace LogTailer.Ui.Services
 {
     using System;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
     using Base;
     using Domain.Models;
 
     public interface ISessionStateService : IService, IDisposable
     {
-        Session ReadSession();
-        Task UpdateSession(Session session, bool writeToDb);
+        IEnumerable<OpenFile> ReadOpenFiles();
+        Task UpdateOpenFiles(IEnumerable<OpenFile> files);
+
+        Task<OpenFile> CreateOpenFile(string filePath);
     }
 }

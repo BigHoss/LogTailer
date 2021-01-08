@@ -9,7 +9,7 @@
     
     <Nullable>enable</Nullable>
     
-    <ApplicationIcon>logo.ico</ApplicationIcon>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -38,9 +38,20 @@
     <PackageReference Include="Syncfusion.Themes.MaterialDark.WPF" Version="18.4.0.33" />
     <PackageReference Include="Syncfusion.Tools.Windows" Version="18.4.0.33" />
     <PackageReference Include="Syncfusion.Tools.WPF" Version="18.4.0.33" />
+    <PackageReference Include="Syncfusion.Tools.WPF.Classic" Version="18.4.0.33" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\LogTailer.Data\LogTailer.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="logo.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\logo.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 </Project>

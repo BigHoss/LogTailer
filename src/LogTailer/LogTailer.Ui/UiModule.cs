@@ -1,4 +1,4 @@
-namespace LogTailer
+namespace LogTailer.Ui
 {
     using Autofac;
     using Data;

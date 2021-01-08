@@ -1,5 +1,7 @@
-namespace LogTailer.Services
+namespace LogTailer.Ui.Services
 {
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
     using Data.Services;
     using Domain.Models;
@@ -7,7 +9,24 @@ namespace LogTailer.Services
     public class SessionStateService : ISessionStateService
     {
         private readonly ISessionService _sessionService;
-        public Session Session { get; private set; }
+        private Session? session;
+
+        private Session Session
+        {
+            get
+            {
+                if (session is not null)
+                {
+                    return session;
+                }
+
+                session = new Session();
+
+                _sessionService.UpdateSession(session);
+                return session;
+            }
+            set => session = value;
+        }
 
         public SessionStateService(ISessionService sessionService)
         {
@@ -17,30 +36,24 @@ namespace LogTailer.Services
         }
 
 
-
-        public Session ReadSession()
-        {
-            Session = _sessionService.ReadSession();
-
-            if (Session is not null)
-            {
-                return Session;
-            }
-
-            Session = new Session();
-
-            _sessionService.UpdateSession(Session);
-
-            return Session;
-        }
-
-        public Task UpdateSession(Session session, bool writeToDb)
-        {
-            Session = session;
-
-            return writeToDb ? _sessionService.UpdateSession(session) : Task.CompletedTask;
-        }
+        private Task UpdateSession() => _sessionService.UpdateSession(Session);
 
         public void Dispose() => _sessionService.UpdateSession(Session);
+        public IEnumerable<OpenFile> ReadOpenFiles() => Session.OpenFiles;
+
+        public async Task UpdateOpenFiles(IEnumerable<OpenFile> files)
+        {
+            Session.OpenFiles = files.ToList();
+            await UpdateSession();
+        }
+
+        public async Task<OpenFile> CreateOpenFile(string filePath)
+        {
+            var file = new OpenFile {FilePath = filePath};
+            Session.OpenFiles.Add(file);
+            await UpdateSession();
+
+            return await Task.FromResult(file);
+        }
     }
 }

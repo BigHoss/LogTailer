@@ -1,47 +1,32 @@
 <UserControl x:Class="LogTailer.Ui.Pages.Shell.RibbonView"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
-    xmlns:syncfusionskin ="clr-namespace:Syncfusion.SfSkinManager;assembly=Syncfusion.SfSkinManager.WPF"
              xmlns:s="https://github.com/canton7/Stylet"
-    xmlns:system="clr-namespace:System;assembly=mscorlib"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
-    <UserControl.Resources>
-        <ObjectDataProvider
-            x:Key="Themes"
-            MethodName="GetValues"
-            ObjectType="{x:Type system:Enum}">
-            <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="syncfusionskin:VisualStyles"></x:Type>
-            </ObjectDataProvider.MethodParameters>
-        </ObjectDataProvider>
-    </UserControl.Resources>
     <Grid>
         <syncfusion:Ribbon x:Name="Ribbon"
                            AutoPersist="True">
-            <syncfusion:RibbonTab Caption="HOME" IsChecked="True" >
+            <syncfusion:RibbonTab Caption="HOME" IsChecked="True">
                 <syncfusion:RibbonBar Name="File" Header="File">
                     <syncfusion:RibbonButton SizeForm="Large" Label="Open"
                                              Command="{s:Action OpenFile}">
                         <syncfusion:RibbonButton.IconTemplate>
                             <DataTemplate>
-                                <ContentControl Content="{StaticResource Open}"></ContentControl>
+                                <ContentControl Content="{StaticResource Open}" />
                             </DataTemplate>
                         </syncfusion:RibbonButton.IconTemplate>
                     </syncfusion:RibbonButton>
                 </syncfusion:RibbonBar>
                 <syncfusion:RibbonBar Name="Highlights" Header="HighLights">
-                    <syncfusion:RibbonListBox></syncfusion:RibbonListBox>
+                    <syncfusion:RibbonListBox />
                 </syncfusion:RibbonBar>
             </syncfusion:RibbonTab>
-            <syncfusion:RibbonTab Caption="VIEW" IsChecked="True" >
-                <syncfusion:RibbonBar Name="Theme" Header="Theme">
-                    <syncfusion:RibbonListBox ItemsSource="{Binding Source={StaticResource Themes}}"
-                                              SelectedValue="{Binding SelectedTheme}"/>
-                </syncfusion:RibbonBar>
+            <syncfusion:RibbonTab Caption="VIEW" IsChecked="True">
+
             </syncfusion:RibbonTab>
 
 
@@ -51,7 +36,7 @@
                                              Command="{s:Action OpenFile}">
                         <syncfusion:RibbonButton.IconTemplate>
                             <DataTemplate>
-                                <ContentControl Content="{StaticResource Open}"></ContentControl>
+                                <ContentControl Content="{StaticResource Open}" />
                             </DataTemplate>
                         </syncfusion:RibbonButton.IconTemplate>
                     </syncfusion:RibbonButton>
