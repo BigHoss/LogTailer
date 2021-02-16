@@ -1,7 +1,10 @@
+# Archived
+
+Archived because [SEQ](https://datalust.co/) does check all the marks.
+
+
+
 # LogTailer
-
-
-
 
 # TestFileGenerator
 
