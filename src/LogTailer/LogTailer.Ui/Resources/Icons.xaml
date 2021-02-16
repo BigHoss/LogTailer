@@ -28,7 +28,7 @@
       </Path>
     </Grid>
   </Viewbox>
-    
+
     <Viewbox x:Shared="false" x:Key="Close">
         <Grid Width="48" Height="48" Visibility="Visible">
             <Path Data="M29.916016,0L31.999023,2.0700073 17.988037,16 32,29.930054 29.91803,32 15.905029,18.070007 2.0820313,31.812012 0,29.742004 13.822998,16 0.0010375977,2.2590332 2.0840454,0.18902588 15.905029,13.929016z" Stretch="Uniform" Fill="#FFFFFFFF" Width="26" Height="26" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5">
@@ -61,6 +61,21 @@
     <Viewbox x:Shared="false" x:Key="Refreshed">
         <Grid Width="48" Height="48" Visibility="Visible">
             <Path Data="M4.8340385,18.999997L15.021066,29.172987 25.178065,18.999997z M4.6731493E-05,16.999994L30.002047,16.999994 15.022043,32.000994z M4.8340075,2.0000038L15.021024,12.17302 25.17804,2.0000038z M0,0L30.002047,0 15.022024,15.001024z" Stretch="Uniform" Fill="#FFFFFFFF" Width="26" Height="26" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5">
+                <Path.RenderTransform>
+                    <TransformGroup>
+                        <TransformGroup.Children>
+                            <RotateTransform Angle="0" />
+                            <ScaleTransform ScaleX="1" ScaleY="1" />
+                        </TransformGroup.Children>
+                    </TransformGroup>
+                </Path.RenderTransform>
+            </Path>
+        </Grid>
+    </Viewbox>
+
+    <Viewbox x:Shared="false" x:Key="Add">
+        <Grid Width="48" Height="48" Visibility="Visible">
+            <Path Data="M12.126984,0L19.872009,0 19.872009,12.128 32,12.128 32,19.872999 19.872009,19.872999 19.872009,31.999 12.126984,31.999 12.126984,19.872999 0,19.872999 0,12.128 12.126984,12.128z" Stretch="Uniform" Fill="#FFFFFFFF" Width="26" Height="26" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5">
                 <Path.RenderTransform>
                     <TransformGroup>
                         <TransformGroup.Children>

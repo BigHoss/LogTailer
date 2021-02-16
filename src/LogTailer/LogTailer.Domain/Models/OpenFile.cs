@@ -7,9 +7,5 @@ namespace LogTailer.Domain.Models
         public int Id { get; set; }
 
         public string FilePath { get; set; }
-
-        public int SessionId { get; set; }
-
-        public Session Session { get; set; }
     }
 }

@@ -65,9 +65,14 @@ namespace TestFileGenerator.Services
                 fs.Close();
             }
 
+            var messages = new[] {"level(ERR), info(some error occured)", "level(WRN), info(some validation failed)", "level(INF), info(some process finished), elapsedTime(123)"};
+
+            var rnd = new Random();
+
             while (true)
             {
-                File.AppendAllText(_config.FileToGenerate, $"{DateTime.Now:s}, info(this is a testlogentry), guid({Guid.NewGuid()}) {Environment.NewLine}");
+                var contents = $"{DateTime.Now:s}, {messages[rnd.Next(messages.Length)]} {Environment.NewLine}";
+                File.AppendAllText(_config.FileToGenerate, contents);
                 _logger.LogInformation("new line");
 
                 Thread.Sleep(_config.IntervalToGenerate);

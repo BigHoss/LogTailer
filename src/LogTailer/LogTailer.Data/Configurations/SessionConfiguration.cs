@@ -6,6 +6,15 @@ namespace LogTailer.Data.Configurations
 
     public class SessionConfiguration : IEntityTypeConfiguration<Session>
     {
-        public void Configure(EntityTypeBuilder<Session> builder) => _ = builder.HasKey(x => x.Id);
+        public void Configure(EntityTypeBuilder<Session> builder)
+        {
+            _ = builder.HasKey(x => x.Id);
+
+            _ = builder.HasMany(x => x.LineHighlights)
+                       .WithOne();
+
+            _ = builder.HasMany(x => x.OpenFiles)
+                       .WithOne();
+        }
     }
 }

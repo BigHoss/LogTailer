@@ -1,0 +1,26 @@
+<syncfusion:RibbonWindow x:Class="LogTailer.Ui.Views.ShellView"
+                             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                             xmlns:s="https://github.com/canton7/Stylet"
+                             xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
+                             xmlns:syncfusionskin ="clr-namespace:Syncfusion.SfSkinManager;assembly=Syncfusion.SfSkinManager.WPF"
+                             xmlns:viewModels="clr-namespace:LogTailer.Ui.ViewModels"
+                             syncfusionskin:SfSkinManager.VisualStyle="MaterialDark"
+                             Icon="pack://application:,,,/Resources/logo.ico"
+                             mc:Ignorable="d"
+                             d:DataContext="{d:DesignInstance viewModels:ShellViewModel}"
+                             Title="{Binding Title}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <ContentControl s:View.Model="{Binding RibbonViewModel}" />
+        <ContentControl Grid.Row="1" s:View.Model="{Binding FileTabsViewModel}" />
+
+
+    </Grid>
+</syncfusion:RibbonWindow>

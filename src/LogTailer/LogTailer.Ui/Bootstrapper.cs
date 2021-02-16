@@ -4,8 +4,8 @@ namespace LogTailer.Ui
     using Autofac;
     using Bootstrappers;
     using Microsoft.Extensions.Configuration;
-    using Pages;
     using Syncfusion.SfSkinManager;
+    using ViewModels;
 
     public class Bootstrapper : AutofacBootstrapper<ShellViewModel>
     {

@@ -7,6 +7,7 @@ namespace LogTailer.Data
     {
         public DbSet<Session> Sessions { get; set; }
         public DbSet<OpenFile> OpenFiles { get; set; }
+        public DbSet<LineHighlight> LineHighlights { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.UseSqlite("Data Source=logtailer.db");

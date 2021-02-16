@@ -3,7 +3,10 @@
 # srcdoc
 srcdoc/*.xml
 
+srcdoc/**
+srcdoc/*.*
 
+src/LogTailer/.idea/**/*
 
 
 ## Ignore Visual Studio temporary files, build results, and

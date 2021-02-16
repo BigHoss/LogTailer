@@ -1,5 +1,5 @@
-
 // ReSharper disable ClassNeverInstantiated.Global
+
 namespace LogTailer.Domain.Models
 {
     using System.Collections.Generic;
@@ -9,5 +9,7 @@ namespace LogTailer.Domain.Models
     {
         public int Id { get; set; }
         public List<OpenFile> OpenFiles { get; set; } = new List<OpenFile>();
+
+        public List<LineHighlight> LineHighlights { get; set; } = new List<LineHighlight>();
     }
 }

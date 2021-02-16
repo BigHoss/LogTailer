@@ -4,6 +4,7 @@ namespace LogTailer.Data.Services
     using System.Linq;
     using System.Threading.Tasks;
     using Domain.Models;
+    using Microsoft.EntityFrameworkCore;
 
     public class SessionService : ISessionService
     {
@@ -15,7 +16,9 @@ namespace LogTailer.Data.Services
         {
             _context.Database.EnsureCreated();
 
-            return _context.Sessions.FirstOrDefault();
+            return _context.Sessions
+                           .Include(x => x.OpenFiles)
+                           .FirstOrDefault();
         }
 
         public async Task UpdateSession(Session session)
